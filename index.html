@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday, my love ✨</title>
+  <title>Happy Birthday, my baby ✨</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 
@@ -15,7 +16,7 @@
     <div class="lock-inner">
       <div class="lock-icon">&#128274;</div>
       <h2 class="lock-title">Just for you</h2>
-      <p class="lock-sub">Enter the secret code to access this little corner of ours</p>
+      <p class="lock-sub">Enter the secret code to open your gift</p>
       <div class="lock-input-row">
         <input type="password" id="codeInput" class="lock-input" placeholder="••••••••" maxlength="12" autocomplete="off" />
         <button class="lock-btn" onclick="checkCode()">Enter</button>
@@ -24,85 +25,164 @@
     </div>
   </div>
 
+  <!-- ===================== LETTER MODAL ===================== -->
+  <div id="letterModal" class="letter-modal">
+    <div class="letter-wrap">
+      <div class="letter-seal">&#10084;</div>
+      <div class="letter-paper">
+        <div class="letter-date">May 6, 2026 &nbsp;&middot;&nbsp; From Paris, with love</div>
+        <div class="letter-salut">To ma chérie,</div>
+        <div class="letter-body">
+          <!-- ✏️ WESWES — écris ton message ici -->
+          <p>Happy birthday &#10024;</p>
+          <p>I wish I could do more for your birthday, I hope you'll love this little thing.</p>
+          <p>You always tell me that I have so much imagination so there it is, I write a little story for you.</p>
+          <p>Since I met you I'm happy like I've never been, there is no words to tell you how much you are important for me and I'm glad to share your life everyday since this day.</p>
+          <p>One more year for you, the first one to start with me and not the last one because I'll be here to make you smile forever.</p>
+          <p>Enjoy your day, this is your day and I hope it'll be full of love and happiness.</p>
+          <p>Sobrang importante ka sa akin, Ikaw lang ang babae sa buhay ko, Mahal na mahal kita, sobra &#128149;</p>
+        </div>
+        <div class="letter-sign">— Ton chéri &#128018;&#10084;&#65039;</div>
+      </div>
+      <div class="letter-bottom">
+        <button class="letter-close-btn" onclick="closeLetter()">Open your gift &#10024;</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ===================== SITE ===================== -->
   <div class="site-wrapper" id="siteWrapper">
 
     <header class="site-header">
-      <h1>&#10024; Happy birthday, my love &#10024;</h1>
-      <p>A little corner made just for the two of us</p>
+      <h1>&#10024; Happy birthday, my baby &#10024;</h1>
+      <p>A little corner made just for you ma chérie.</p>
     </header>
 
     <main class="site-main">
 
-      <!-- LEFT SIDEBAR -->
-      <aside class="sidebar sidebar-left">
-
-        <div class="counter-card">
-          <div class="card-label">Together since</div>
-          <div class="card-sub">April 8, 2026 at 7:27 AM &#128140;</div>
-          <div class="flip-grid">
-            <div class="flip-unit"><span class="flip-num" id="fd">0</span><div class="flip-label">days</div></div>
-            <div class="flip-unit"><span class="flip-num" id="fh">00</span><div class="flip-label">hours</div></div>
-            <div class="flip-unit"><span class="flip-num" id="fm">00</span><div class="flip-label">min</div></div>
-            <div class="flip-unit"><span class="flip-num" id="fs">00</span><div class="flip-label">sec</div></div>
-          </div>
+      <!-- COUNTER -->
+      <div class="counter-card bento-counter">
+        <div class="card-label">Together since &middot; April 8, 2026 &#128140;</div>
+        <div class="counter-hero">
+          <span class="hero-num" id="fd">0</span>
+          <span class="hero-label">days together</span>
         </div>
-
-        <div class="card">
-          <div class="card-label">You &#128149;</div>
-          <!-- Replace track ID if needed -->
-          <iframe src="https://open.spotify.com/embed/track/3jJ9djWzDlQnqDd7vTZs9K?utm_source=generator&theme=0"
-            width="100%" height="80" frameborder="0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy" style="border-radius:6px;margin-top:6px;display:block;"></iframe>
+        <div class="counter-hms">
+          <span class="hms-unit"><span class="hms-num" id="fh">00</span><span class="hms-lbl">h</span></span>
+          <span class="hms-sep">&middot;</span>
+          <span class="hms-unit"><span class="hms-num" id="fm">00</span><span class="hms-lbl">min</span></span>
+          <span class="hms-sep">&middot;</span>
+          <span class="hms-unit"><span class="hms-num" id="fs">00</span><span class="hms-lbl">sec</span></span>
         </div>
+      </div>
 
-        <div class="card">
-          <div class="card-label">Me &#128153;</div>
-          <!-- Replace track ID if needed -->
-          <iframe src="https://open.spotify.com/embed/track/05YAU5SxFm5rHbqMIIbKli?utm_source=generator&theme=0"
-            width="100%" height="80" frameborder="0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy" style="border-radius:6px;margin-top:6px;display:block;"></iframe>
-        </div>
-
-      </aside>
-
-      <!-- CENTER: STORY -->
-      <section class="story-section">
-        <h2 class="story-title">&#128149; Our story</h2>
-
+      <!-- STORY -->
+      <section class="story-section bento-story">
+        <h2 class="story-title">Princess Jaja and Weswes the monkey &#128018;</h2>
         <div class="book-pages" id="bookPages">
-          <!--
-            YOUR STORY GOES HERE
-            Each <div class="page"> = one page.
-            Add as many as you want.
-          -->
+
+          <!-- PAGE 1 — Cover -->
           <div class="page active" data-page="1">
-            <p>This is where you'll write your story... The day you first reached out, what you felt, the moments that matter. Everything that comes straight from the heart.</p>
-            <p>Every word you put here is something she might read hundreds of times. So take your time, and just be yourself.</p>
-            <p>You can talk about that first message, a special memory, what you love about her, your dreams together... or simply tell her you love her. &#128149;</p>
+            <div class="page-cover">
+              <img src="img/cover.png" alt="Princess Jaja and Weswes" />
+            </div>
           </div>
 
+          <!-- PAGE 2 — The jungle -->
           <div class="page" data-page="2">
-            <p>This is where you'll write your story... The day you first reached out, what you felt, the moments that matter. Everything that comes straight from the heart.</p>
-            <p>Every word you put here is something she might read hundreds of times. So take your time, and just be yourself.</p>
-            <p>You can talk about that first message, a special memory, what you love about her, your dreams together... or simply tell her you love her. &#128149;</p>
+            <div class="page-text">
+              <div class="page-chapter">Chapter I &middot; The Jungle of Parissea</div>
+              <p>Once upon a time, there was a monkey named <strong>Weswes</strong>.</p>
+              <p>He lived in a vast jungle called Parissea — a place wild, hostile, and dangerous for humans. Deep in his heart, he carried a strong resentment toward them. Not without reason… humans had taken his family when he was just a baby. Since then, he had learned to survive on his own, and every single day was a fight.</p>
+              <p>One day, while searching for food to calm his hunger, he heard a scream in the distance.</p>
+              <p class="story-beat">A scream so powerful that it stopped him instantly.</p>
+              <p>Curious, he rushed toward the sound, swinging from vine to vine, almost falling several times in his haste. And when he finally arrived… his whole body froze.</p>
+              <p>A giant frog was about to devour a young woman.</p>
+              <p>Even with all the hatred he had for humans, he couldn't just stand there. He couldn't leave her. So without thinking, he threw himself into the fight. He fought for her. With everything he had.</p>
+              <p>Growls, blows, and bites echoed through the jungle… until, at last, the creature fled.</p>
+            </div>
           </div>
 
+          <!-- PAGE 3 — The princess -->
           <div class="page" data-page="3">
-            <p>This is where you'll write your story... The day you first reached out, what you felt, the moments that matter. Everything that comes straight from the heart.</p>
-            <p>Every word you put here is something she might read hundreds of times. So take your time, and just be yourself.</p>
-            <p>You can talk about that first message, a special memory, what you love about her, your dreams together... or simply tell her you love her. &#128149;</p>
+            <div class="page-text">
+              <div class="page-chapter">Chapter II &middot; A Heart That Raced</div>
+              <p>Slowly, he turned back toward the young woman…</p>
+              <p class="story-beat">And suddenly, his heart began to race.<br/>Faster than ever before.</p>
+              <p>She stood there in front of him. A <strong>princess</strong>. Beautiful beyond anything he had ever imagined. Her pink dress, slightly torn. Her messy hair. Her deep, piercing eyes. Her radiant smile.</p>
+              <p>Weswes couldn't move. She gently stepped closer. So gently… that he didn't resist. Not even for a second. Her hand softly ran through his fur.</p>
+              <p class="story-beat">"I am Princess Jaja. Thank you for saving me… my little monkey."</p>
+              <p>He didn't understand her words. And yet… somehow, he understood everything. Because in her eyes, something spoke louder than language.</p>
+              <p>But suddenly — voices. Footsteps. The moment shattered.</p>
+              <p>The princess's guards rushed in, pulling her away and chasing Weswes off violently. She screamed, begging them not to hurt him… But it was too late. Wounded, he had no choice but to run.</p>
+              <p>One thought echoed in his mind: <em>He had to see her again. No matter what.</em></p>
+            </div>
           </div>
 
+          <!-- PAGE 4 — Separation -->
           <div class="page" data-page="4">
-            <p>This is where you'll write your story... The day you first reached out, what you felt, the moments that matter. Everything that comes straight from the heart.</p>
-            <p>Every word you put here is something she might read hundreds of times. So take your time, and just be yourself.</p>
-            <p>You can talk about that first message, a special memory, what you love about her, your dreams together... or simply tell her you love her. &#128149;</p>
+            <div class="page-text">
+              <div class="page-chapter">Chapter III &middot; Two Worlds Apart</div>
+              <p>Back at the castle, the princess couldn't stop crying. He had saved her life. And in return, he had been treated like nothing. Her heart ached with every step. But what she had seen in his eyes — that kindness, that sincerity — it stayed with her. Forever.</p>
+              <p>When she returned to the kingdom of <strong>Philippea</strong>, she remained silent all day. And when night fell, she stood by her window, high in her tower. Looking toward the jungle. Thinking of him. Her little monkey.</p>
+              <p>But reality was waiting for her. Soon… she would have to marry a prince. A life chosen for her. Not by her.</p>
+              <p>Meanwhile, Weswes began a dangerous journey. To find her. The one who had changed everything. The one who had given his life meaning. He didn't know where to go. The castle was too far to be seen. But he kept moving forward. Step after step.</p>
+              <p>Along the way, he met unexpected allies — including <strong>Pablo</strong>, a gorilla who helped him survive a deadly encounter with a panther. And somehow… fate was on his side, because Pablo had escaped from the very kingdom where the princess lived.</p>
+              <p class="story-beat">Days passed. Long. Exhausting. Endless.</p>
+              <p>Doubt began to creep in. After all… she was a princess. And he… was just a monkey.</p>
+            </div>
           </div>
-        </div>
 
+          <!-- PAGE 5 — The castle -->
+          <div class="page" data-page="5">
+            <div class="page-text">
+              <div class="page-chapter">Chapter IV &middot; The Tower</div>
+              <p>But just as he was about to give up — he saw it. Far in the distance.</p>
+              <p class="story-beat">A tower. The castle.<br/>Massive. Imposing.<br/>Standing proudly on the edge of a cliff.</p>
+              <p>And that tower… it didn't look like a home. It looked like a prison. But he didn't stop. One step. Then another. Until he reached it. Silently. Carefully.</p>
+              <p>That same day… it was the princess's big day. The day she would meet the man she was meant to marry. A life without love. A destiny she never chose.</p>
+              <p>A grand ball had been prepared for the occasion. She walked down the stairs in her deep pink gown. Stunning. Almost unreal. Every eye in the room was on her. But her mind… was somewhere else. Far away. Lost.</p>
+              <p>After one more forced smile… one too many…</p>
+              <p>She left. Ran to her room. And broke down. Curled up on herself. Tears falling endlessly.</p>
+              <p>Then — a noise. At her window. She froze. Slowly… she pulled the curtain aside.</p>
+              <p class="story-beat">And her heart stopped.<br/>It was him.<br/><strong>Weswes.</strong></p>
+            </div>
+          </div>
+
+          <!-- PAGE 6 — The fight -->
+          <div class="page" data-page="6">
+            <div class="page-text">
+              <div class="page-chapter">Chapter V &middot; The Fight</div>
+              <p>Her face lit up instantly. Without hesitation, she opened the window. And pulled him into her arms. Holding him tightly. As if nothing could hurt her anymore.</p>
+              <p>Time stood still. Their eyes met. And in his gaze, she saw everything — his courage, his pain, his love.</p>
+              <p>But suddenly — the door burst open. The prince entered. Sword in hand. And everything changed again.</p>
+              <p>Weswes stepped in front of her. Protecting her. Without hesitation. The fight began. Violent. Relentless. He fought with everything he had. Again. And again. But his body was getting weaker. Wound after wound.</p>
+              <p>Until — one mistake. One second. And the final blow struck.</p>
+              <p class="story-beat">He fell.</p>
+              <p>The princess rushed to him. Held him in her arms. But she already knew. She was losing him. So in one final moment…</p>
+              <p class="story-beat">She kissed him.</p>
+              <p>And suddenly — a blinding light filled the room. Everything disappeared. And when it faded… the monkey was gone.</p>
+              <p>In his place… a man. Lying in her arms. Beautiful. Unreal. But his eyes… they were still his. <strong>Weswes.</strong></p>
+            </div>
+          </div>
+
+          <!-- PAGE 7 — The end -->
+          <div class="page" data-page="7">
+            <div class="page-text">
+              <div class="page-chapter">Chapter VI &middot; Ever After</div>
+              <p>He slowly stood up. Took his staff. And faced the prince. The fight resumed. But this time… there was no doubt. Every movement was perfect. Driven by something stronger than anything else.</p>
+              <p class="story-beat">Love.</p>
+              <p>The prince fell. Defeated.</p>
+              <p>And when he turned toward her… she knew. It was him. Still him. Always him. Slowly, they moved closer to each other. As if the world had disappeared.</p>
+              <p class="story-beat">And in that moment… they kissed.</p>
+              <p>And that is how Weswes, once just a monkey, became a prince. By the side of <strong>Princess Jaja</strong>. In the kingdom of Philippea.</p>
+              <p>Together, they found happiness again. And they never let go of each other. Their love grew stronger every day. Until they became king and queen. And built a life…</p>
+              <p class="story-beat">Together.</p>
+              <p class="story-end">&#10024; The End &#10024;</p>
+            </div>
+          </div>
+
+        </div>
         <div class="book-nav">
           <button class="book-btn" id="prevBtn" onclick="changePage(-1)" disabled>&#8592;</button>
           <span class="book-page-indicator" id="pageIndicator">1 / 4</span>
@@ -110,111 +190,180 @@
         </div>
       </section>
 
-      <!-- RIGHT SIDEBAR -->
-      <aside class="sidebar sidebar-right">
-
-        <div class="card">
-          <div class="card-label">Distance between us</div>
-          <span class="distance-val">10,729 km</span>
-          <div class="distance-sub">but our hearts are right next to each other &#128149;</div>
-          <div class="map-wrap">
-            <svg viewBox="0 0 190 110" xmlns="http://www.w3.org/2000/svg" class="map-svg">
-              <rect width="190" height="110" fill="#fce4ec"/>
-              <ellipse cx="92" cy="34" rx="11" ry="8" fill="#f4c0d1" opacity="0.7"/>
-              <ellipse cx="94" cy="62" rx="9" ry="13" fill="#f4c0d1" opacity="0.6"/>
-              <ellipse cx="133" cy="38" rx="25" ry="13" fill="#f4c0d1" opacity="0.65"/>
-              <ellipse cx="42" cy="50" rx="13" ry="20" fill="#f4c0d1" opacity="0.6"/>
-              <ellipse cx="148" cy="82" rx="10" ry="7" fill="#f4c0d1" opacity="0.55"/>
-              <path id="flightPath" d="M 93 33 Q 123 8 148 43" stroke="#f4c0d1" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
-              <path d="M 93 33 Q 123 8 148 43" stroke="#d4537e" stroke-width="1.2" fill="none" stroke-dasharray="4 3" class="plane-trail" opacity="0.6"/>
-              <circle cx="93" cy="33" r="4" fill="#d4537e"/>
-              <circle cx="93" cy="33" r="8" fill="#d4537e" opacity="0.15"/>
-              <text x="93" y="24" text-anchor="middle" font-size="7" fill="#72243e" font-family="sans-serif">Paris</text>
-              <circle cx="148" cy="43" r="4" fill="#d4537e"/>
-              <circle cx="148" cy="43" r="8" fill="#d4537e" opacity="0.15"/>
-              <text x="148" y="34" text-anchor="middle" font-size="7" fill="#72243e" font-family="sans-serif">Manila</text>
-              <g>
-                <animateMotion dur="4s" repeatCount="indefinite" rotate="auto">
-                  <mpath href="#flightPath"/>
-                </animateMotion>
-                <text font-size="11" fill="#993556" text-anchor="middle" dy="4">&#9992;</text>
-              </g>
-            </svg>
-          </div>
-          <div class="map-cities">
-            <span>&#128205; Paris</span>
-            <span>&#128205; Manila</span>
+      <!-- MAP -->
+      <div class="card bento-map">
+        <div class="map-top-row">
+          <div>
+            <div class="card-label">Distance between us</div>
+            <span class="distance-val">10,729 km</span>
+            <div class="distance-sub">but our hearts are right next to each other &#128149;</div>
           </div>
         </div>
-
-        <div class="card">
-          <div class="card-label"><span class="live-dot"></span>Right now</div>
-          <div class="clocks">
-            <div class="clock-item">
-              <div class="clock-time" id="timeParis">--:--</div>
-              <div class="clock-ampm" id="timeParisAP"></div>
-              <div class="clock-city">Paris &#127467;&#127479;</div>
-            </div>
-            <div class="clock-diff">
-              <div class="diff-badge">+6h</div>
-              <div class="diff-arrow">&#8596;</div>
-            </div>
-            <div class="clock-item">
-              <div class="clock-time" id="timeManila">--:--</div>
-              <div class="clock-ampm" id="timeManilaAP"></div>
-              <div class="clock-city">Manila &#127477;&#127469;</div>
-            </div>
-          </div>
+        <div class="map-leaflet-wrap">
+          <div id="mapLeaflet"></div>
         </div>
+      </div>
 
-        <div class="card">
-          <div class="card-label">&#127467;&#127479; → &#127477;&#127469; Translate</div>
-          <textarea class="trad-input" id="tradInput" rows="2" placeholder="Type in French..."></textarea>
-          <button class="trad-btn" id="tradBtn" onclick="doTranslate()">
-            <span id="tradBtnText">Translate ✨</span>
-          </button>
-          <div class="trad-result" id="tradResult">Translation will appear here...</div>
-          <div class="trad-flag">&#127477;&#127469; Tagalog</div>
+      <!-- BIRTHDAY HER -->
+      <div class="bday-card bday-her bento-spotify1">
+        <!-- Taurus constellation — viewBox cropped to top portion so stars fill upper card naturally -->
+        <svg class="bday-constellation" viewBox="0 0 200 105" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg">
+          <!-- Lines -->
+          <g stroke="rgba(255,235,242,0.55)" stroke-width="1.2" fill="none" stroke-linecap="round">
+            <line x1="20" y1="30" x2="35" y2="18"/><line x1="35" y1="18" x2="48" y2="24"/>
+            <line x1="48" y1="24" x2="58" y2="13"/><line x1="20" y1="30" x2="36" y2="40"/>
+            <line x1="35" y1="18" x2="36" y2="40"/>
+            <line x1="72" y1="57" x2="88" y2="67"/><line x1="88" y1="67" x2="100" y2="80"/>
+            <line x1="100" y1="80" x2="78" y2="94"/><line x1="88" y1="67" x2="116" y2="70"/>
+            <line x1="116" y1="70" x2="125" y2="85"/><line x1="125" y1="85" x2="100" y2="80"/>
+            <line x1="116" y1="70" x2="138" y2="46"/>
+            <line x1="138" y1="46" x2="172" y2="15"/><line x1="138" y1="46" x2="156" y2="28"/>
+          </g>
+          <!-- Static outer auras (don't animate) -->
+          <circle cx="78"  cy="94" r="22" fill="white" opacity="0.035"/>
+          <circle cx="78"  cy="94" r="13" fill="white" opacity="0.08"/>
+          <circle cx="172" cy="15" r="14" fill="white" opacity="0.04"/>
+          <circle cx="172" cy="15" r="8"  fill="white" opacity="0.09"/>
+          <circle cx="116" cy="70" r="12" fill="white" opacity="0.04"/>
+          <circle cx="116" cy="70" r="7"  fill="white" opacity="0.09"/>
+          <circle cx="20"  cy="30" r="10" fill="white" opacity="0.04"/>
+          <circle cx="20"  cy="30" r="5"  fill="white" opacity="0.10"/>
+          <!-- Animated star cores + inner glow -->
+          <g class="star s1"><circle cx="78"  cy="94" r="6"  fill="white" opacity="0.18"/><circle cx="78"  cy="94" r="3.6" fill="white" opacity="0.96"/></g>
+          <g class="star s2"><circle cx="172" cy="15" r="4"  fill="white" opacity="0.15"/><circle cx="172" cy="15" r="2.8" fill="white" opacity="0.93"/></g>
+          <g class="star s3"><circle cx="116" cy="70" r="3.5" fill="white" opacity="0.14"/><circle cx="116" cy="70" r="2.5" fill="white" opacity="0.91"/></g>
+          <g class="star s4"><circle cx="20"  cy="30" r="3"  fill="white" opacity="0.14"/><circle cx="20"  cy="30" r="2.2" fill="white" opacity="0.89"/></g>
+          <g class="star s5"><circle cx="88"  cy="67" r="3"  fill="white" opacity="0.10"/><circle cx="88"  cy="67" r="2.2" fill="white" opacity="0.86"/></g>
+          <g class="star s6"><circle cx="138" cy="46" r="3"  fill="white" opacity="0.10"/><circle cx="138" cy="46" r="2.2" fill="white" opacity="0.86"/></g>
+          <g class="star s7"><circle cx="35"  cy="18" r="2.5" fill="white" opacity="0.08"/><circle cx="35"  cy="18" r="1.9" fill="white" opacity="0.82"/></g>
+          <g class="star s8"><circle cx="100" cy="80" r="2.5" fill="white" opacity="0.08"/><circle cx="100" cy="80" r="2.0" fill="white" opacity="0.83"/></g>
+          <!-- Remaining small stars (static) -->
+          <circle cx="48"  cy="24" r="5" fill="white" opacity="0.05"/><circle cx="48"  cy="24" r="1.7" fill="white" opacity="0.78"/>
+          <circle cx="58"  cy="13" r="4" fill="white" opacity="0.04"/><circle cx="58"  cy="13" r="1.5" fill="white" opacity="0.74"/>
+          <circle cx="36"  cy="40" r="4" fill="white" opacity="0.04"/><circle cx="36"  cy="40" r="1.4" fill="white" opacity="0.72"/>
+          <circle cx="72"  cy="57" r="6" fill="white" opacity="0.05"/><circle cx="72"  cy="57" r="2.0" fill="white" opacity="0.82"/>
+          <circle cx="125" cy="85" r="6" fill="white" opacity="0.05"/><circle cx="125" cy="85" r="2.0" fill="white" opacity="0.82"/>
+          <circle cx="156" cy="28" r="5" fill="white" opacity="0.04"/><circle cx="156" cy="28" r="1.6" fill="white" opacity="0.76"/>
+        </svg>
+        <div class="bday-label">You</div>
+        <div class="bday-stars">&#10022; &nbsp; &#10023; &nbsp; &#10022;</div>
+        <div class="bday-sign">Taurus</div>
+        <div class="bday-meta">&#127807; Earth &nbsp;&middot;&nbsp; &#9832; Venus</div>
+        <div class="bday-range">Apr 20 – May 20</div>
+        <div class="bday-trait">Loyal &middot; Sensual &middot; Devoted</div>
+        <div class="bday-birth">06 · 05 · 1997</div>
+      </div>
+
+      <!-- BIRTHDAY HIM -->
+      <div class="bday-card bday-him bento-spotify2">
+        <!-- Pisces constellation — horizontal layout, both fish in top portion -->
+        <svg class="bday-constellation" viewBox="0 0 200 105" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg">
+          <!-- Wrapped in translate(12,0) to horizontally center the drawing within the 200u viewBox -->
+          <g transform="translate(12, 0)">
+            <!-- Lines -->
+            <g stroke="rgba(225,235,255,0.55)" stroke-width="1.2" fill="none" stroke-linecap="round">
+              <!-- Western fish loop -->
+              <line x1="22" y1="28" x2="36" y2="15"/><line x1="36" y1="15" x2="52" y2="20"/>
+              <line x1="52" y1="20" x2="58" y2="38"/><line x1="58" y1="38" x2="48" y2="52"/>
+              <line x1="48" y1="52" x2="30" y2="46"/><line x1="30" y1="46" x2="22" y2="28"/>
+              <!-- Cord -->
+              <line x1="58" y1="38" x2="74" y2="48"/><line x1="74" y1="48" x2="90" y2="58"/>
+              <!-- Eastern fish loop -->
+              <line x1="90"  y1="58" x2="106" y2="52"/>
+              <line x1="106" y1="52" x2="122" y2="38"/>
+              <line x1="122" y1="38" x2="140" y2="42"/>
+              <line x1="140" y1="42" x2="154" y2="56"/>
+              <line x1="154" y1="56" x2="152" y2="74"/>
+              <line x1="152" y1="74" x2="140" y2="84"/>
+              <line x1="140" y1="84" x2="122" y2="82"/>
+              <line x1="122" y1="82" x2="106" y2="70"/>
+              <line x1="106" y1="70" x2="90"  y2="58"/>
+            </g>
+            <!-- Static outer auras -->
+            <circle cx="90"  cy="58" r="22" fill="white" opacity="0.035"/>
+            <circle cx="90"  cy="58" r="13" fill="white" opacity="0.08"/>
+            <circle cx="140" cy="42" r="12" fill="white" opacity="0.04"/>
+            <circle cx="140" cy="42" r="7"  fill="white" opacity="0.09"/>
+            <circle cx="52"  cy="20" r="10" fill="white" opacity="0.04"/>
+            <circle cx="52"  cy="20" r="6"  fill="white" opacity="0.09"/>
+            <!-- Animated star cores + inner glow -->
+            <g class="star s1"><circle cx="90"  cy="58" r="6"   fill="white" opacity="0.18"/><circle cx="90"  cy="58" r="3.5" fill="white" opacity="0.96"/></g>
+            <g class="star s3"><circle cx="140" cy="42" r="3.5" fill="white" opacity="0.14"/><circle cx="140" cy="42" r="2.5" fill="white" opacity="0.91"/></g>
+            <g class="star s5"><circle cx="52"  cy="20" r="3"   fill="white" opacity="0.13"/><circle cx="52"  cy="20" r="2.3" fill="white" opacity="0.89"/></g>
+            <g class="star s2"><circle cx="154" cy="56" r="3"   fill="white" opacity="0.10"/><circle cx="154" cy="56" r="2.2" fill="white" opacity="0.86"/></g>
+            <g class="star s4"><circle cx="36"  cy="15" r="2.5" fill="white" opacity="0.09"/><circle cx="36"  cy="15" r="1.9" fill="white" opacity="0.82"/></g>
+            <g class="star s6"><circle cx="122" cy="38" r="2.5" fill="white" opacity="0.09"/><circle cx="122" cy="38" r="2.0" fill="white" opacity="0.84"/></g>
+            <g class="star s7"><circle cx="106" cy="52" r="2.5" fill="white" opacity="0.09"/><circle cx="106" cy="52" r="1.9" fill="white" opacity="0.82"/></g>
+            <g class="star s8"><circle cx="152" cy="74" r="2.5" fill="white" opacity="0.09"/><circle cx="152" cy="74" r="1.9" fill="white" opacity="0.82"/></g>
+            <!-- Remaining small stars (static) -->
+            <circle cx="22"  cy="28" r="5" fill="white" opacity="0.05"/><circle cx="22"  cy="28" r="1.8" fill="white" opacity="0.78"/>
+            <circle cx="58"  cy="38" r="6" fill="white" opacity="0.05"/><circle cx="58"  cy="38" r="2.0" fill="white" opacity="0.82"/>
+            <circle cx="48"  cy="52" r="5" fill="white" opacity="0.04"/><circle cx="48"  cy="52" r="1.7" fill="white" opacity="0.76"/>
+            <circle cx="30"  cy="46" r="5" fill="white" opacity="0.04"/><circle cx="30"  cy="46" r="1.6" fill="white" opacity="0.74"/>
+            <circle cx="74"  cy="48" r="4" fill="white" opacity="0.04"/><circle cx="74"  cy="48" r="1.5" fill="white" opacity="0.68"/>
+            <circle cx="106" cy="70" r="6" fill="white" opacity="0.05"/><circle cx="106" cy="70" r="2.0" fill="white" opacity="0.82"/>
+            <circle cx="140" cy="84" r="5" fill="white" opacity="0.04"/><circle cx="140" cy="84" r="1.8" fill="white" opacity="0.78"/>
+            <circle cx="122" cy="82" r="5" fill="white" opacity="0.04"/><circle cx="122" cy="82" r="1.7" fill="white" opacity="0.76"/>
+          </g>
+        </svg>
+        <div class="bday-label">Me</div>
+        <div class="bday-stars">&#10022; &nbsp; &#10023; &nbsp; &#10022;</div>
+        <div class="bday-sign">Pisces</div>
+        <div class="bday-meta">&#127754; Water &nbsp;&middot;&nbsp; &#9798; Neptune</div>
+        <div class="bday-range">Feb 19 – Mar 20</div>
+        <div class="bday-trait">Dreamy &middot; Romantic &middot; Intuitive</div>
+        <div class="bday-birth">19 · 02 · 1997</div>
+      </div>
+
+      <!-- TRANSLATOR -->
+      <div class="card bento-trans">
+        <div class="trad-header">
+          <span class="trad-lang" id="tradFrom">&#127467;&#127479; French</span>
+          <button class="trad-swap-btn" id="tradSwap" onclick="swapLang()">&#8644;</button>
+          <span class="trad-lang" id="tradTo">&#127477;&#127469; Tagalog</span>
         </div>
+        <textarea class="trad-input" id="tradInput" rows="2" placeholder="Type in French..."></textarea>
+        <button class="trad-btn" id="tradBtn" onclick="doTranslate()">
+          <span id="tradBtnText">Translate ✨</span>
+        </button>
+        <div class="trad-result" id="tradResult">Translation will appear here...</div>
+      </div>
 
-      </aside>
+      <!-- TIME CARD — PARIS (Me) -->
+      <div class="card monkey-card bento-monkey-paris" data-tz="Europe/Paris">
+        <div class="card-label">Me right now &#127467;&#127479;</div>
+        <div class="time-orb">
+          <span class="orb-em em-sleep">&#127769;</span>
+          <span class="orb-em em-morning">&#127751;</span>
+          <span class="orb-em em-afternoon">&#9728;&#65039;</span>
+          <span class="orb-em em-evening">&#127751;</span>
+          <span class="orb-em em-sleepy">&#127769;</span>
+        </div>
+        <div class="state-text">--</div>
+        <div class="time-big">--:--</div>
+        <div class="sub-text">--</div>
+      </div>
+
+      <!-- TIME CARD — MANILA (You) -->
+      <div class="card monkey-card bento-monkey-manila" data-tz="Asia/Manila">
+        <div class="card-label">You right now &#127477;&#127469;</div>
+        <div class="time-orb">
+          <span class="orb-em em-sleep">&#127769;</span>
+          <span class="orb-em em-morning">&#127751;</span>
+          <span class="orb-em em-afternoon">&#9728;&#65039;</span>
+          <span class="orb-em em-evening">&#127751;</span>
+          <span class="orb-em em-sleepy">&#127769;</span>
+        </div>
+        <div class="state-text">--</div>
+        <div class="time-big">--:--</div>
+        <div class="sub-text">--</div>
+      </div>
 
     </main>
 
-    <!-- MOBILE BOTTOM WIDGETS -->
-    <div class="mobile-widgets">
-      <div class="card">
-        <div class="card-label">Distance between us</div>
-        <span class="distance-val">10,729 km</span>
-        <div class="distance-sub">but our hearts are right next to each other &#128149;</div>
-      </div>
-      <div class="card">
-        <div class="card-label"><span class="live-dot"></span>Right now</div>
-        <div class="clocks">
-          <div class="clock-item">
-            <div class="clock-time" id="timeParisM">--:--</div>
-            <div class="clock-city">Paris</div>
-          </div>
-          <div class="clock-diff"><div class="diff-badge">+6h</div></div>
-          <div class="clock-item">
-            <div class="clock-time" id="timeManilaM">--:--</div>
-            <div class="clock-city">Manila</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
 
-  <!-- MONKEY -->
-  <div class="monkey-wrap" id="monkeyWrap">
-    <div class="mk-bubble" id="mkBubble">&#127820; Hiiii!</div>
-    <div class="mk-emoji-wrap">
-      <span class="mk-face">&#129429;</span>
-      <span class="mk-hand">&#128400;&#65039;</span>
-    </div>
-  </div>
-
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
